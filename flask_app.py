@@ -68,7 +68,7 @@ def create_voucher():
     print(json_data)
     #voucher=json_data.get("Name")+"-"+json_data.get("Shelf")+"-"+json_data.get("Column")+"-"+json_data.get("lRow")
     path= send_voucher(json_data)
-    path="shelfs.pdf"
+    
     return send_file(path, as_attachment=True) 
 
 

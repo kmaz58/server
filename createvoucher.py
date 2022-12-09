@@ -6,6 +6,10 @@ import pandas as pd
 import os, os.path
 import shutil
 import barcode
+import jinja2
+import pdfkit
+from datetime import datetime
+
 
 
 
@@ -21,9 +25,11 @@ def create_voucher(json_data):
     d.text((0,50), json_data.get("Zip"),font = font,align='center', fill=(0,0,0))
     d.text((0,75), json_data.get("Region"),font = font,align='center', fill=(0,0,0))
     d.text((0,100), json_data.get("Comment"),font = font2,align='center', fill=(0,0,0))
-    d.text((0,120), json_data.get("Comment"),font = font2,align='center', fill=(0,0,0))
-    d.text((0,152), "Αντικαταβολή:",font = font2,align='center', fill=(0,0,0))
-    d.text((110,150), json_data.get("Cod"),font = font,align='center', fill=(0,0,0))
+    #d.text((0,120), json_data.get("Comment"),font = font2,align='center', fill=(0,0,0))
+    if( not(json_data.get("Cod_Enabled"))):
+        d.text((0,152), "Αντικαταβολή:",font = font2,align='center', fill=(0,0,0))
+        d.text((110,150), json_data.get("Cod"),font = font,align='center', fill=(0,0,0))
+    
     
 
 
@@ -31,6 +37,36 @@ def create_voucher(json_data):
 
     
     return img_number
+
+def create_voucher_using_html(json_data):
+    name = json_data.get("Name")
+    telephone = json_data.get("Telephone")
+    address = json_data.get("Address")
+    region= json_data.get("Region") 
+    zip = json_data.get("Zip")
+    comment= json_data.get("Comment")
+    today_date = datetime.today().strftime("%d %b, %Y")
+
+    context = {'name': name, 'telephone': telephone, 'address': address, 'region': region,
+            'zip': zip,'comment':comment,'today_date':today_date}
+
+    template_loader = jinja2.FileSystemLoader('./')
+    template_env = jinja2.Environment(loader=template_loader)
+
+    html_template = 'html_template.html'
+    template = template_env.get_template(html_template)
+    output_text = template.render(context)
+
+
+    config = pdfkit.configuration(wkhtmltopdf='/usr/bin/wkhtmltopdf')
+    output_pdf = 'pdf_generated.pdf'
+    options = {
+    'page-height': '150',
+    'page-width': '62'
+    }
+
+    pdfkit.from_string(output_text, output_pdf, configuration=config, css='style.css',options=options)
+    
 
 
 
@@ -62,8 +98,12 @@ def send_voucher(json_data):
     # print("datareceived:"+json_data)
     create_voucher(json_data).save("vouchers/voucher.png")
     create_pdf()
+
     
-    path="shelfs.pdf"
+    #path="shelfs.pdf"
+    create_voucher_using_html(json_data)
+
+    path="pdf_generated.pdf"
 
     return path
     

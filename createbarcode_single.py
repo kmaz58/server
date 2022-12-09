@@ -24,27 +24,22 @@ def get_concat_h(im1, im2):
     
 
 def create_qr(data):
-    qr = qrcode.QRCode(version = 1, box_size = 8, border = 2)
-    qr.add_data(data)
-    qr.make(fit = True)
-    number = str(data)
-    # number = str(data.zfill(15))
-    # barcode_img = barcode_format(number, writer=barcode.writer.ImageWriter())
-    ean = barcode.codex.Code39(number, writer=barcode.writer.ImageWriter(), add_checksum=False)
 
+    number = str(data)
+    ean = barcode.codex.Code39(number, writer=barcode.writer.ImageWriter(), add_checksum=False)
     image = ean.render()
     rs= image.resize((460,230), resample= PIL.Image.NEAREST)
-
 
     return rs 
 
 
 def create_number(data):
-    img_number = Image.new('RGB', (460, 115), color = (255,255,255))
-    font = ImageFont.truetype(r'Roboto-Black.ttf', 150) 
+    W,H= (460,115)
+    img_number = Image.new('RGB', (W, H), color = (255,255,255))
     font2 = ImageFont.truetype(r'Roboto-Black.ttf', 100) 
     d = ImageDraw.Draw(img_number)
-    d.text((0,0), data,font = font2,align='center', fill=(0,0,0))
+    w, h = d.textsize(data)
+    d.text(((W-w)/2,(H-h)/2),data,font = font2,anchor="mm", align='center', fill=(0,0,0))
     
     return img_number 
 

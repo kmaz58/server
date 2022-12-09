@@ -1,8 +1,11 @@
 import qrcode
+import PIL
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 from fpdf import FPDF
 import os, os.path
 import shutil
+import barcode
+
 
 
 
@@ -18,35 +21,39 @@ def concat_sidebyside(imgs):
     return dst
 
 def get_concat_h(im1, im2):
-    dst = Image.new('RGB', (230, 230), color = (255,255,255) )
-    dst.paste(im1, (20, 5))
-    dst.paste(im2, (0, 185))
-    color = "black"
+    dst = Image.new('RGB', (460, 230),color="white")
+    dst.paste(im1, (0, 0))
+    im2.resize((460,115))
+    dst.paste(im2, (0,115))
     border =(1, 1, 1, 1)
-    dst_border = ImageOps.expand(dst, border=border, fill=color)
+    dst_border = ImageOps.expand(dst, border=border)
     return dst_border
     
 
 def create_qr(data):
-    qr = qrcode.QRCode(version = 3, box_size = 6, border = 1)
-    qr.add_data(data)
-    qr.make(fit = True)
-    img_qr = qr.make_image(fill_color = 'black', back_color = 'white')
-    return img_qr 
+    number = str(data)
+    ean = barcode.codex.Code39(number, writer=barcode.writer.ImageWriter(), add_checksum=False)
+    image = ean.render()
+    rs= image.resize((460,230), resample= PIL.Image.NEAREST)
+    return rs 
+
 
 
 def create_number(data):
-    img_number = Image.new('RGB', (230, 50), color = (255,255,255))
-    font2 = ImageFont.truetype(r'Roboto-Black.ttf', 34) 
+    W,H= (460,115)
+    img_number = Image.new('RGB', (W, H), color = (255,255,255))
+    font2 = ImageFont.truetype(r'Roboto-Black.ttf', 100) 
     d = ImageDraw.Draw(img_number)
-    d.text((115,25), data,font = font2,align='center', fill=(0,0,0), anchor="mm")
+    w, h = d.textsize(data)
+    d.text(((W-w)/2,(H-h)/2),data,font = font2,anchor="mm", align='center', fill=(0,0,0))
+    
     return img_number 
 
 
 
 
 def create_pdf():
-    pdf = FPDF('P', 'mm', (23, 23))
+    pdf = FPDF('P', 'mm', (62, 29))
     path = "letters/"
     rows=[]
     for f in os.listdir(path):
@@ -56,7 +63,7 @@ def create_pdf():
     rows.sort()
     for row in rows:
         pdf.add_page() #add a page first
-        pdf.image(row,x=0.5,y=0.5,w=22, h= 22)
+        pdf.image(row,x=1,y=1,w=60, h= 27)
 
     pdf.output("barcode.pdf", "F")
 
