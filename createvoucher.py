@@ -45,24 +45,37 @@ def create_voucher_using_html(json_data):
     region= json_data.get("Region") 
     zip = json_data.get("Zip")
     comment= json_data.get("Comment")
+    cod_enabled=not(json_data.get("Cod_Enabled"))
+    cod_value=json_data.get("Cod")
+    receiver_charge_enabled=json_data.get("ReceiverCharge_Enabled")
+    Voucherposition=json_data.get("voucherposition")
+    print(Voucherposition)
+
+
+
+
     today_date = datetime.today().strftime("%d %b, %Y")
 
     context = {'name': name, 'telephone': telephone, 'address': address, 'region': region,
-            'zip': zip,'comment':comment,'today_date':today_date}
+            'zip': zip,'comment':comment,'today_date':today_date, 'Cod_Enabled':cod_enabled, 'Cod':cod_value, 'receiver_charge_enabled':receiver_charge_enabled, 'voucherposition':Voucherposition}
 
     template_loader = jinja2.FileSystemLoader('./')
     template_env = jinja2.Environment(loader=template_loader)
 
+
     html_template = 'html_template.html'
+ 
     template = template_env.get_template(html_template)
     output_text = template.render(context)
 
 
+    # config = pdfkit.configuration(wkhtmltopdf="c:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe")
     config = pdfkit.configuration(wkhtmltopdf='/usr/bin/wkhtmltopdf')
     output_pdf = 'pdf_generated.pdf'
     options = {
-    'page-height': '150',
-    'page-width': '62'
+    
+    'page-height': '297',
+    'page-width': '210',
     }
 
     pdfkit.from_string(output_text, output_pdf, configuration=config, css='style.css',options=options)

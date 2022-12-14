@@ -1,2 +1,84 @@
 
- p { font-size: 16px; }
+ p { font-size: 24px;
+    font-weight: bold;
+    letter-spacing: .1.2rem;
+    line-height: 90%;
+    margin: 5px;
+    margin-bottom: 10px;
+
+    }
+ 
+ * {
+   box-sizing: border-box;
+ }
+ 
+ /* Create two equal columns that floats next to each other */
+ .column {
+   float: left;
+   width: 50%;
+   padding: 10px;
+ }
+ 
+ /* Clear floats after the columns */
+ .row:after {
+   content: "";
+   display: table;
+   clear: both;
+ }
+ 
+ div {
+    
+    line-height: 80%;
+
+  }
+
+  cod {
+    font-size: 35px;
+    color: #fff;
+    background-color: #000;
+    
+  }
+
+  space2{
+    padding-top: 500px;
+  }
+
+  p.pad1{
+    text-align: center;
+
+  }
+
+  p.pad2{
+    text-align: center;
+    margin-top: 105mm;
+
+  }
+
+  p.pad3{
+    text-align: center;
+    margin-top: 212mm;
+
+  }
+
+  p.comment{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-align: left;
+    white-space: pre-wrap;
+    line-height: 100%;
+  }
+
+
+  .columnadress {
+    float: left;
+    width: 50%;
+    margin-top: -10px;
+    margin-bottom: -10px;
+  }
+  
+  /* Clear floats after the columns */
+  .rowadress:after {
+    content: "";
+    display: table;
+    clear: both;
+  }

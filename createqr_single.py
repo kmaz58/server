@@ -44,7 +44,7 @@ def create_number(data):
     d = ImageDraw.Draw(img_number)
     d.text((25,0), data[-3],font = font,align='center', fill=(0,0,0))
     d.text((125,0), data[-1],font = font,align='center', fill=(0,0,0))
-    d.text((20,190), data,font = font2,align='center', fill=(0,0,0))
+    d.text((5,180), data,font = font2,align='center', fill=(0,0,0))
     return img_number 
 
 

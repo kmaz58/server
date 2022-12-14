@@ -1,12 +1,70 @@
-<hr />
-<p style="text-align: center;"><strong>Mitsakos Team Car Parts</strong></p>
-<hr />
-<p style="text-align: center;"><strong>Paraliptis</strong></p>
-<p style="text-align: left;">{{name}}</p>
-<p style="text-align: left;">{{telephone}}</p>
-<p style="text-align: left;">{{address}}</p>
-<p style="text-align: left;">{{region}}</p>
-<p style="text-align: left;">{{zip}}</p>
-<p style="text-align: left;">{{comment}}</p>
+<html>
+<meta charset="utf-8">
 
-<p style="text-align: left;"><strong>Date: {{today_date}}</strong></p>
+<body>
+<div class="row">
+  <div class="column">
+      {% if voucherposition == "1" %}
+      <p class="pad1"><strong>Παραλήπτης</strong></p>
+      {% endif %}
+      {% if voucherposition == "2" %}
+      <p class="pad2"><strong>Παραλήπτης</strong></p>
+      {% endif %}
+      {% if voucherposition == "3" %}
+      <p class="pad3"><strong>Παραλήπτης</strong></p>
+      {% endif %}
+      <p style="text-align: left;">{{name}}</p>
+      <p style="text-align: left;">{{telephone}}</p>
+      <p style="text-align: left;">{{address}}</p>
+      <div class="rowadress">
+            <div class="columnadress">
+                  <p style="text-align: left;">{{region}}</p>
+            </div>
+            <div class="columnadress">
+                  <p style="text-align: left;">{{zip}}</p>
+            </div>
+      </div>
+      <p class="comment">{{comment}}</p>
+      {% if receiver_charge_enabled%}
+      <p style="text-align: left;">ΧΡΕΩΣΗ ΠΑΡΑΛΗΠΤΗ</p>
+      {% endif %}
+      {% if Cod_Enabled%}
+      <p style="text-align: left;"><strong>ΑΝΤΙΚΑΤΑΒΟΛΗ: <cod> {{Cod}}€ </cod></strong></p>
+      {% endif %}
+    
+  </div>
+
+  <div class="column">
+
+      {% if voucherposition == "1" %}
+      <p class="pad1"><strong>Παραλήπτης</strong></p>
+      {% endif %}
+      {% if voucherposition == "2" %}
+      <p class="pad2"><strong>Παραλήπτης</strong></p>
+      {% endif %}
+      {% if voucherposition == "3" %}
+      <p class="pad3"><strong>Παραλήπτης</strong></p>
+      {% endif %}
+      <p style="text-align: left;">{{name}}</p>
+      <p style="text-align: left;">{{telephone}}</p>
+      <p style="text-align: left;">{{address}}</p>
+      <div class="rowadress">
+            <div class="columnadress">
+                  <p style="text-align: left;">{{region}}</p>
+            </div>
+            <div class="columnadress">
+                  <p style="text-align: left;">{{zip}}</p>
+            </div>
+      </div>
+      <p class="comment">{{comment}}</p>
+      {% if receiver_charge_enabled%}
+      <p style="text-align: left;">ΧΡΕΩΣΗ ΠΑΡΑΛΗΠΤΗ</p>
+      {% endif %}
+      {% if Cod_Enabled%}
+      <p style="text-align: left;"><strong>ΑΝΤΙΚΑΤΑΒΟΛΗ: <cod> {{Cod}}€ </cod></strong></p>
+      {% endif %}
+
+</div>
+
+</body>
+</html>

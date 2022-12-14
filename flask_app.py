@@ -85,7 +85,7 @@ def upload_excludeproducts():
         return send_file(path, as_attachment=True)  
 
 
-@app.route('/downloadtemplates', methods = ["POST"])
+@app.route('/dsrdownloadtemplates', methods = ["POST"])
 def download_templates():
    if request.method == 'POST':
         #print(request.f['file']) 
