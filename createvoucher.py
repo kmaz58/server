@@ -109,8 +109,8 @@ def send_voucher(json_data):
     # voucher=json_data.get("Name")+"-"+json_data.get("Telephone")+"-"+json_data.get("Address")+"-"+json_data.get("Zip")+"-"+json_data.get("Region")+"-"+json_data.get("Comment")+"-"+"-"+json_data.get("Cod")
 
     # print("datareceived:"+json_data)
-    create_voucher(json_data).save("vouchers/voucher.png")
-    create_pdf()
+    #create_voucher(json_data).save("vouchers/voucher.png")
+    #create_pdf()
 
     
     #path="shelfs.pdf"
