@@ -48,7 +48,7 @@ def create_voucher_using_html(json_data):
     cod_enabled=not(json_data.get("Cod_Enabled"))
     cod_value=json_data.get("Cod")
     receiver_charge_enabled=json_data.get("ReceiverCharge_Enabled")
-    Voucherposition=json_data.get("voucherposition")
+    Voucherposition=json_data.get("Voucherposition")
     print(Voucherposition)
 
 

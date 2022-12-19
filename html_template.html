@@ -27,6 +27,8 @@
       <p class="comment">{{comment}}</p>
       {% if receiver_charge_enabled%}
       <p style="text-align: left;">ΧΡΕΩΣΗ ΠΑΡΑΛΗΠΤΗ</p>
+      {% else %}
+      <p style="text-align: left;">ΧΡΕΩΣΗ ΑΠΟΣΤΟΛΕΑ</p>
       {% endif %}
       {% if Cod_Enabled%}
       <p style="text-align: left;"><strong>ΑΝΤΙΚΑΤΑΒΟΛΗ: <cod> {{Cod}}€ </cod></strong></p>
@@ -59,6 +61,8 @@
       <p class="comment">{{comment}}</p>
       {% if receiver_charge_enabled%}
       <p style="text-align: left;">ΧΡΕΩΣΗ ΠΑΡΑΛΗΠΤΗ</p>
+      {% else %}
+      <p style="text-align: left;">ΧΡΕΩΣΗ ΑΠΟΣΤΟΛΕΑ</p>
       {% endif %}
       {% if Cod_Enabled%}
       <p style="text-align: left;"><strong>ΑΝΤΙΚΑΤΑΒΟΛΗ: <cod> {{Cod}}€ </cod></strong></p>
