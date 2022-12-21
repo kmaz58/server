@@ -8,6 +8,8 @@ from createqr_single import send_single_pdf
 from createbarcode_single import send_single_barcode_pdf
 from createbarcode_multiple import send_multiple_barcode_pdf
 from createvoucher import send_voucher
+from create_number import send_number_pdf
+
 
 
 async_mode = None
@@ -81,6 +83,20 @@ def upload_excludeproducts():
         f.save('shelfs.xlsx')
         print("upload")
         path=send_multiple_pdf()
+        print(path)
+        return send_file(path, as_attachment=True)  
+
+
+
+@app.route('/upload_multiple_numbers_file', methods = ["POST"])
+def upload_numbers():
+   if request.method == 'POST':
+        #print(request.f['file']) 
+        print(request.files)
+        f = request.files['file']
+        f.save('numbers.xlsx')
+        print("upload")
+        path=send_number_pdf()
         print(path)
         return send_file(path, as_attachment=True)  
 

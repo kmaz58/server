@@ -15,13 +15,12 @@ def concat_sidebyside(imgs):
     return dst
 
 def get_concat_h(im1, im2):
-    dst = Image.new('RGB', (460, 230))
+    dst = Image.new('RGB', (460, 230),color="white")
     im1=im1.resize((230,230))
-    dst.paste(im1, (0, 0))
+    dst.paste(im1,(round((230-(im1.width))/2), 0))
     dst.paste(im2, (230, 0))
-    color = "black"
     border =(1, 1, 1, 1)
-    dst_border = ImageOps.expand(dst, border=border, fill=color)
+    dst_border = ImageOps.expand(dst, border=border)
     return dst_border
     
 
@@ -40,7 +39,7 @@ def create_number(data):
     d = ImageDraw.Draw(img_number)
     d.text((25,0), data[-3],font = font,align='center', fill=(0,0,0))
     d.text((125,0), data[-1],font = font,align='center', fill=(0,0,0))
-    d.text((20,190), data,font = font2,align='center', fill=(0,0,0))
+    d.text((5,180), data,font = font2,align='center', fill=(0,0,0))
     return img_number
 
 
@@ -74,17 +73,17 @@ def send_multiple_pdf():
     path = "letters/"
 
     for i in  range(0,len(df),1):
-        print(i)
+        # print(i)
 
         for j in range(1):
             data = df.at[i+j,"Shelfs"]
-            get_concat_h(create_qr(data),create_number(data)).save("letters/letter"+str(i+j).zfill(2)+".png")
-            print(data)
+            get_concat_h(create_qr(data),create_number(data)).save("letters/letter"+str(i+j).zfill(4)+".png")
+            # print(data)
         for f in os.listdir(path):
             ext = os.path.splitext(f)[1]
             imgs.append(os.path.join(path,f))
         imgs.sort()
-        print(imgs)
+        # print(imgs)
 
     created_path = create_pdf()
     print("returned")

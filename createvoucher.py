@@ -56,8 +56,12 @@ def create_voucher_using_html(json_data):
 
     today_date = datetime.today().strftime("%d %b, %Y")
 
-    context = {'name': name, 'telephone': telephone, 'address': address, 'region': region,
-            'zip': zip,'comment':comment,'today_date':today_date, 'Cod_Enabled':cod_enabled, 'Cod':cod_value, 'receiver_charge_enabled':receiver_charge_enabled, 'voucherposition':Voucherposition}
+    context = {'name': name, 'telephone': telephone,
+             'address': address, 'region': region,
+            'zip': zip,'comment':comment,
+            'today_date':today_date, 'Cod_Enabled':cod_enabled,
+             'Cod':cod_value, 'receiver_charge_enabled':receiver_charge_enabled,
+              'voucherposition':Voucherposition}
 
     template_loader = jinja2.FileSystemLoader('./')
     template_env = jinja2.Environment(loader=template_loader)
