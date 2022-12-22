@@ -63,27 +63,37 @@ def create_pdf():
     return created_path
 
     
-def send_multiple_pdf():
-    df = pd.read_excel("shelfs.xlsx",engine='openpyxl')
+def send_multiple_pdf(json_data):
+    # df = pd.read_excel("shelfs.xlsx",engine='openpyxl')
     #print (len(df))
-    #print (df)
+    # print (type(df))
 
+    # print (type(json_data))
 
     imgs = []
     path = "letters/"
+    list_example = ["Isogeio-1-A-1","Isogeio-1-A-2","Isogeio-1-A-15","Isogeio-1-A-4","Isogeio-1-A-5"]
+    list_incoming=json_data.get("listdata")
 
-    for i in  range(0,len(df),1):
-        # print(i)
+    # print("\n",type(list_example))
+    # print(list_example)
+    # print("\n",type(list_incoming))
+    # print(list_incoming)
 
-        for j in range(1):
-            data = df.at[i+j,"Shelfs"]
-            get_concat_h(create_qr(data),create_number(data)).save("letters/letter"+str(i+j).zfill(4)+".png")
+
+    for i in range(len(list_incoming)):
+            # data = df.at[i+j,"Shelfs"]
+            data= list_incoming[i]
+
+            print (type(data))
+
+            get_concat_h(create_qr(data),create_number(data)).save("letters/letter"+str(i).zfill(4)+".png")
             # print(data)
-        for f in os.listdir(path):
+    for f in os.listdir(path):
             ext = os.path.splitext(f)[1]
             imgs.append(os.path.join(path,f))
-        imgs.sort()
-        # print(imgs)
+    imgs.sort()
+    # print(imgs)
 
     created_path = create_pdf()
     print("returned")

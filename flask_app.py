@@ -1,4 +1,3 @@
-
 from flask import Flask, jsonify, make_response, request, Response, session, send_file
 from flask_cors import CORS, cross_origin
 import pandas as pd
@@ -9,7 +8,7 @@ from createbarcode_single import send_single_barcode_pdf
 from createbarcode_multiple import send_multiple_barcode_pdf
 from createvoucher import send_voucher
 from create_number import send_number_pdf
-
+import itertools
 
 
 async_mode = None
@@ -77,14 +76,38 @@ def create_voucher():
 @app.route('/upload_multiple_shelfs_file', methods = ["POST"])
 def upload_excludeproducts():
    if request.method == 'POST':
-        #print(request.f['file']) 
-        print(request.files)
-        f = request.files['file']
-        f.save('shelfs.xlsx')
-        print("upload")
-        path=send_multiple_pdf()
-        print(path)
-        return send_file(path, as_attachment=True)  
+         json_data = request.json
+         # print(json_data)
+         path=send_multiple_pdf(json_data)
+         print(path)
+         return send_file(path, as_attachment=True)  
+
+
+
+def range_char(start, stop):
+    for number in range(ord(start), ord(stop) + 1):
+        yield(chr(number))
+
+@app.route('/iterlists', methods = ["POST"])
+def iterlists():
+   
+   json_data = request.json
+   print(json_data)
+
+   rangeShelf=range(int(json_data.get("Shelffrom")),int(json_data.get("Shelfto"))+1)
+   rangeColumn=range_char(json_data.get("Columnfrom"),json_data.get("Columnto"))
+   rangeRow=range(int(json_data.get("lRowfrom")),int(json_data.get("lRowto"))+1)
+
+   listOfLists = [[json_data.get("Floor")],rangeShelf,rangeColumn,rangeRow]
+   list1 = list(itertools.product(*listOfLists))
+
+   separator = '-'
+   list1 = [separator.join(map(str,r)) for r in list1]
+
+   print(jsonify(list1))
+   #for l in itertools.product(*listOLists):
+
+   return jsonify(list1)
 
 
 
