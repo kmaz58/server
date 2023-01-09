@@ -32,7 +32,11 @@ def get_concat_h(im1, im2):
 
 def create_qr(data):
     number = str(data)
-    ean = barcode.codex.Code39(number, writer=barcode.writer.ImageWriter(), add_checksum=False)
+    
+    ean = barcode.get('code128', number, barcode.writer.ImageWriter())
+
+    # ean = barcode.codex.Code39(number, writer=barcode.writer.ImageWriter(), add_checksum=False)
+
     image = ean.render()
     rs= image.resize((460,230), resample= PIL.Image.NEAREST)
     return rs 
